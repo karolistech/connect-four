@@ -1,0 +1,30 @@
+type BoardSize = "7x6" | "8x7" | "9x8";
+type BoardDimensions = { cols: number; rows: number };
+
+type Player = "red" | "yellow";
+type BoardCell = Player | null;
+type Board = BoardCell[][];
+
+type Game = {
+  boardSize: BoardSize;
+  board: Board;
+};
+
+const boardSizes: Record<BoardSize, BoardDimensions> = {
+  "7x6": { cols: 7, rows: 6 },
+  "8x7": { cols: 8, rows: 7 },
+  "9x8": { cols: 9, rows: 8 }
+};
+
+export default function Game() {
+  return (
+    <div className="game">
+    </div>
+  );
+}
+
+function createBoard(boardSize: BoardSize): Board {
+  const { cols, rows } = boardSizes[boardSize];
+
+  return Array.from({ length: rows }, () => Array(cols).fill(null));
+}
