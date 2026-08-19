@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import "./Game.css";
+import icons from "@/assets/icons.svg";
 
 type Status =
   | { type: "playing"; currentPlayer: Player }
@@ -30,6 +31,7 @@ export default function Game() {
   const [game, setGame] = useState<Game>(() => createGame("7x6"));
 
   const { status, board, boardSize } = game;
+  const { cols } = boardSizes[boardSize];
 
   function changeBoardSize(boardSize: BoardSize) {
     setGame(createGame(boardSize));
@@ -56,6 +58,18 @@ export default function Game() {
       </div>
 
       <div className="board">
+        <div className={`board__columns board__columns--${boardSize}`}>
+          {Array.from({ length: cols }, (_, colIndex) => (
+            <div key={colIndex} className="board__column">
+              <button className="board__drop-button">
+                <svg className="board__arrow-icon">
+                  <use href={`${icons}#arrow`} />
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+
         <div className={`board__grid board__grid--${boardSize}`}>
           {board.map((row, rowIndex) => row.map((cell, colIndex) => (
             <div key={`${rowIndex}-${colIndex}`} className="board__cell">
