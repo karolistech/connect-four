@@ -1,0 +1,25 @@
+.board__grid {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+  background-color: #7ab;
+}
+
+.board__grid--7x6 {
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.board__grid--8x7 {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.board__grid--9x8 {
+  grid-template-columns: repeat(9, 1fr);
+}
+
+.board__cell {
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: #fff;
+}

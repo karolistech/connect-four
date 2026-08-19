@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import "./Game.css";
+
 type Status =
   | { type: "playing"; currentPlayer: Player }
   | { type: "win"; winner: Player }
@@ -27,8 +29,40 @@ const boardSizes: Record<BoardSize, BoardDimensions> = {
 export default function Game() {
   const [game, setGame] = useState<Game>(() => createGame("7x6"));
 
+  const { status, board, boardSize } = game;
+
+  function changeBoardSize(boardSize: BoardSize) {
+    setGame(createGame(boardSize));
+  }
+
   return (
     <div className="game">
+      <div className="panel">
+        <div className="panel__board-sizes">
+          <span>Board Size:</span>
+
+          <button onClick={() => changeBoardSize("7x6")}>
+            7 x 6
+          </button>
+
+          <button onClick={() => changeBoardSize("8x7")}>
+            8 x 7
+          </button>
+
+          <button onClick={() => changeBoardSize("9x8")}>
+            9 x 8
+          </button>
+        </div>
+      </div>
+
+      <div className="board">
+        <div className={`board__grid board__grid--${boardSize}`}>
+          {board.map((row, rowIndex) => row.map((cell, colIndex) => (
+            <div key={`${rowIndex}-${colIndex}`} className="board__cell">
+            </div>
+          )))}
+        </div>
+      </div>
     </div>
   );
 }
