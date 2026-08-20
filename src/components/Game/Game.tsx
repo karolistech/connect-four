@@ -33,6 +33,10 @@ export default function Game() {
   const { status, board, boardSize } = game;
   const { cols } = boardSizes[boardSize];
 
+  function dropDisc(col: number) {
+    setGame(game => updateGame(game, col));
+  }
+
   function changeBoardSize(boardSize: BoardSize) {
     setGame(createGame(boardSize));
   }
@@ -61,7 +65,7 @@ export default function Game() {
         <div className={`board__columns board__columns--${boardSize}`}>
           {Array.from({ length: cols }, (_, colIndex) => (
             <div key={colIndex} className="board__column">
-              <button className="board__drop-button">
+              <button className="board__drop-button" onClick={() => dropDisc(colIndex)}>
                 <svg className="board__arrow-icon">
                   <use href={`${icons}#arrow`} />
                 </svg>
@@ -93,4 +97,24 @@ function createBoard(boardSize: BoardSize): Board {
   const { cols, rows } = boardSizes[boardSize];
 
   return Array.from({ length: rows }, () => Array(cols).fill(null));
+}
+
+function updateGame(game: Game, col: number): Game {
+  if (game.status.type !== "playing") return game;
+
+  const row = game.board.findLastIndex(row => row[col] === null);
+
+  if (row === -1) return game;
+
+  const boardSize = game.boardSize;
+  const board = game.board.map(row => [...row]);
+  const player = game.status.currentPlayer;
+
+  board[row][col] = player;
+
+  return {
+    status: { type: "playing", currentPlayer: player === "red" ? "yellow" : "red" },
+    boardSize: boardSize,
+    board: board
+  };
 }
