@@ -59,3 +59,25 @@
   border-radius: 50%;
   background-color: #fff;
 }
+
+.board__disc {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.board__disc--red {
+  background-color: #d22;
+}
+
+.board__disc--yellow {
+  background-color: #fc0;
+}
+
+.board__disc-icon {
+  width: 70%;
+  height: 70%;
+}

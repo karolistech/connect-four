@@ -77,6 +77,11 @@ export default function Game() {
         <div className={`board__grid board__grid--${boardSize}`}>
           {board.map((row, rowIndex) => row.map((cell, colIndex) => (
             <div key={`${rowIndex}-${colIndex}`} className="board__cell">
+              {cell !== null && (
+                <div className={getBoardDiscClass(cell)}>
+                  {getDiscIcon(cell)}
+                </div>
+              )}
             </div>
           )))}
         </div>
@@ -117,4 +122,21 @@ function updateGame(game: Game, col: number): Game {
     boardSize: boardSize,
     board: board
   };
+}
+
+function getBoardDiscClass(player: Player): string {
+  const base = "board__disc";
+  const color = `board__disc--${player}`;
+
+  return [base, color].join(" ");
+}
+
+function getDiscIcon(player: Player): React.JSX.Element {
+  const iconId = player === "red" ? "circle" : "star";
+
+  return (
+    <svg className="board__disc-icon">
+      <use href={`${icons}#${iconId}`} />
+    </svg>
+  );
 }
