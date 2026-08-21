@@ -125,11 +125,21 @@ function updateGame(game: Game, col: number): Game {
     };
   }
 
-  return {
-    status: { type: "playing", currentPlayer: player === "red" ? "yellow" : "red" },
-    boardSize: boardSize,
-    board: board
-  };
+  else if (boardFull(board) === true) {
+    return {
+      status: { type: "draw" },
+      boardSize: boardSize,
+      board: board
+    };
+  }
+
+  else {
+    return {
+      status: { type: "playing", currentPlayer: player === "red" ? "yellow" : "red" },
+      boardSize: boardSize,
+      board: board
+    };
+  }
 }
 
 function connectFour(board: Board, row: number, col: number, player: Player): boolean {
@@ -152,6 +162,10 @@ function connectFour(board: Board, row: number, col: number, player: Player): bo
   }
 
   return false;
+}
+
+function boardFull(board: Board): boolean {
+  return board.every(row => row.every(cell => cell !== null));
 }
 
 function getBoardDiscClass(player: Player): string {
