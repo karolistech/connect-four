@@ -117,11 +117,41 @@ function updateGame(game: Game, col: number): Game {
 
   board[row][col] = player;
 
+  if (connectFour(board, row, col, player) === true) {
+    return {
+      status: { type: "win", winner: player },
+      boardSize: boardSize,
+      board: board
+    };
+  }
+
   return {
     status: { type: "playing", currentPlayer: player === "red" ? "yellow" : "red" },
     boardSize: boardSize,
     board: board
   };
+}
+
+function connectFour(board: Board, row: number, col: number, player: Player): boolean {
+  const directions = [[0, 1], [1, 0], [1, 1], [1, -1]] as const;
+
+  for (const [dr, dc] of directions) {
+    let count = 1;
+
+    for (let step = 1; step < 4; step++) {
+      if (board[row + dr * step]?.[col + dc * step] === player) count++;
+      else break;
+    }
+
+    for (let step = 1; step < 4; step++) {
+      if (board[row - dr * step]?.[col - dc * step] === player) count++;
+      else break;
+    }
+
+    if (count >= 4) return true;
+  }
+
+  return false;
 }
 
 function getBoardDiscClass(player: Player): string {
