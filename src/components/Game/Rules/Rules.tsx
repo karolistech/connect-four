@@ -1,4 +1,5 @@
 import "./Rules.css";
+import icons from "@/assets/icons.svg";
 
 type RulesProps = {
   closeRules: () => void;
@@ -7,6 +8,8 @@ type RulesProps = {
 export default function Rules({ closeRules }: RulesProps) {
   return (
     <div className="rules">
+      <div className="rules__backdrop" />
+
       <div className="rules__modal">
         <h2 className="rules__title">Rules</h2>
 
@@ -30,8 +33,10 @@ export default function Rules({ closeRules }: RulesProps) {
           </ol>
         </div>
 
-        <button className="rules__close-btn" onClick={closeRules}>
-          Got it!
+        <button className="rules__close-button" onClick={closeRules}>
+          <svg className="rules__check-mark-icon">
+            <use href={`${icons}#check-mark`} />
+          </svg>
         </button>
       </div>
     </div>
