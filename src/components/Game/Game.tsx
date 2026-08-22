@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import Rules from "./Rules/Rules";
+
 import "./Game.css";
 import icons from "@/assets/icons.svg";
 
@@ -29,6 +31,7 @@ const boardSizes: Record<BoardSize, BoardDimensions> = {
 
 export default function Game() {
   const [game, setGame] = useState<Game>(() => createGame("7x6"));
+  const [rulesOpen, setRulesOpen] = useState(false);
 
   const { status, board, boardSize } = game;
   const { cols } = boardSizes[boardSize];
@@ -39,6 +42,14 @@ export default function Game() {
 
   function changeBoardSize(boardSize: BoardSize) {
     setGame(createGame(boardSize));
+  }
+
+  function openRules() {
+    setRulesOpen(true);
+  }
+
+  function closeRules() {
+    setRulesOpen(false);
   }
 
   return (
@@ -59,7 +70,15 @@ export default function Game() {
             9 x 8
           </button>
         </div>
+
+        <div className="panel__actions">
+          <button onClick={openRules}>
+            Rules
+          </button>
+        </div>
       </div>
+
+      {rulesOpen === true && <Rules closeRules={closeRules} />}
 
       <div className="board">
         <div className={`board__columns board__columns--${boardSize}`}>
