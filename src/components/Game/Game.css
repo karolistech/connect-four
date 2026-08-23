@@ -40,6 +40,7 @@
   display: grid;
   gap: 1rem;
   background-color: #7ab;
+  overflow: hidden;
 }
 
 .board__grid--7x6 {
@@ -94,6 +95,20 @@
 .board__disc-icon {
   width: 70%;
   height: 70%;
+}
+
+.board__cell > .board__disc {
+  animation: drop 250ms ease-out;
+}
+
+@keyframes drop {
+  from {
+    transform: translateY(-30rem);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
