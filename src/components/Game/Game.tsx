@@ -89,6 +89,14 @@ export default function Game() {
                   <use href={`${icons}#arrow`} />
                 </svg>
               </button>
+
+              {status.type === "playing" && (
+                <div className="board__disc--preview">
+                  <div className={getPreviewDiscClass(status.currentPlayer)}>
+                    {getDiscIcon(status.currentPlayer)}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -97,7 +105,7 @@ export default function Game() {
           {board.map((row, rowIndex) => row.map((cell, colIndex) => (
             <div key={`${rowIndex}-${colIndex}`} className="board__cell">
               {cell !== null && (
-                <div className={getBoardDiscClass(cell)}>
+                <div className={getBoardDiscClass(cell, status)}>
                   {getDiscIcon(cell)}
                 </div>
               )}
@@ -187,11 +195,16 @@ function boardFull(board: Board): boolean {
   return board.every(row => row.every(cell => cell !== null));
 }
 
-function getBoardDiscClass(player: Player): string {
+function getPreviewDiscClass(player: Player): string {
+  return `board__disc board__disc--${player}`;
+}
+
+function getBoardDiscClass(player: Player, status: Status): string {
   const base = "board__disc";
   const color = `board__disc--${player}`;
+  const faded = (status.type === "win" && status.winner !== player) && "board__disc--faded";
 
-  return [base, color].join(" ");
+  return [base, color, faded].filter(Boolean).join(" ");
 }
 
 function getDiscIcon(player: Player): React.JSX.Element {
