@@ -44,6 +44,10 @@ export default function Game() {
     setGame(createGame(boardSize));
   }
 
+  function newGame() {
+    setGame(createGame(boardSize));
+  }
+
   function openRules() {
     setRulesOpen(true);
   }
@@ -54,25 +58,38 @@ export default function Game() {
 
   return (
     <div className="game">
-      <div className="panel">
-        <div className="panel__board-sizes">
+      <div className="menu">
+        <div className="menu__board-sizes">
           <span>Board Size:</span>
 
-          <button onClick={() => changeBoardSize("7x6")}>
+          <button
+            className={getBoardSizeButtonClass("7x6", boardSize)}
+            onClick={() => changeBoardSize("7x6")}
+          >
             7 x 6
           </button>
 
-          <button onClick={() => changeBoardSize("8x7")}>
+          <button
+            className={getBoardSizeButtonClass("8x7", boardSize)}
+            onClick={() => changeBoardSize("8x7")}
+          >
             8 x 7
           </button>
 
-          <button onClick={() => changeBoardSize("9x8")}>
+          <button
+            className={getBoardSizeButtonClass("9x8", boardSize)}
+            onClick={() => changeBoardSize("9x8")}
+          >
             9 x 8
           </button>
         </div>
 
-        <div className="panel__actions">
-          <button onClick={openRules}>
+        <div className="menu__actions">
+          <button className="menu__action-button" onClick={newGame}>
+            New Game
+          </button>
+
+          <button className="menu__action-button" onClick={openRules}>
             Rules
           </button>
         </div>
@@ -193,6 +210,13 @@ function connectFour(board: Board, row: number, col: number, player: Player): bo
 
 function boardFull(board: Board): boolean {
   return board.every(row => row.every(cell => cell !== null));
+}
+
+function getBoardSizeButtonClass(boardSize: BoardSize, currentBoardSize: BoardSize): string {
+  const base = "menu__board-size-button";
+  const selected = boardSize === currentBoardSize && "menu__board-size-button--selected";
+
+  return [base, selected].filter(Boolean).join(" ");
 }
 
 function getPreviewDiscClass(player: Player): string {

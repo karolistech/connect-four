@@ -1,3 +1,45 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.menu__board-sizes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.menu__board-size-button {
+  padding: 0.5rem;
+  border: 1px solid #7ab;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+}
+
+.menu__board-size-button--selected {
+  background-color: #7ab;
+  color: #fff;
+}
+
+.menu__action-button {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #7ab;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+}
+
+.menu__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .board__columns {
   padding: 0.5rem 1.5rem;
   display: grid;
@@ -128,6 +170,13 @@
   }
 }
 
+@media (min-width: 480px) {
+  .menu {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
 @media (hover: none) and (pointer: coarse) {
   .board__drop-button:active {
     filter: brightness(70%);
@@ -136,6 +185,16 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .menu__board-size-button:hover {
+    background-color: #7ab;
+    color: #fff;
+  }
+
+  .menu__action-button:hover {
+    background-color: #7ab;
+    color: #fff;
+  }
+
   .board__drop-button:hover + .board__disc--preview,
   .board__drop-button:focus-visible + .board__disc--preview {
     display: block;

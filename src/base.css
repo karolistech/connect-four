@@ -18,5 +18,6 @@ body {
 
 button {
   -webkit-tap-highlight-color: transparent;
+  font-family: inherit;
   cursor: pointer;
 }
